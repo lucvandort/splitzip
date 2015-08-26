@@ -7,8 +7,8 @@ Created on Wed Aug 26 14:09:20 2015
 
 from splitzip import Folder
 
-path = # Insert path here. Use forward slashes, also in Windows!
-testfolder = Folder(path)
-print(testfolder.contents)
-print(testfolder.split_contents(MAX_TOTAL_SIZE=10e6))
-testfolder.zip_split_contents(MAX_TOTAL_SIZE=10e6)
+path = # Insert path here. For windows paths, use forward slashes or double backslashes!
+myfolder = Folder(path)
+print(myfolder.contents)
+print(myfolder.split_contents(MAX_TOTAL_SIZE=64e6))
+myfolder.zip_split_contents(MAX_TOTAL_SIZE=64e6)
