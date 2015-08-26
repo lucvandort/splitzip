@@ -25,10 +25,8 @@ class Folder:
             filestat = os.lstat(filepath)            
             
             if stat.S_ISDIR(filestat.st_mode):
-#                print('folder: ' + filepath)
                 continue
             elif stat.S_ISREG(filestat.st_mode):
-#                print('file: ' + filepath)
                 self.contents.loc[len(self.contents)] = (filename, filestat.st_size)
 
     def split_contents(self, MAX_TOTAL_SIZE = 100e6):
@@ -49,4 +47,10 @@ class Folder:
             file_sets[str(i).zfill(3)].append(self.contents.loc[ind]['name'])
                 
         return file_sets
+    
+    def zip_split_contents(self, MAX_TOTAL_SIZE = 100e6):
+        for zipnumber, contents in self.split_contents(MAX_TOTAL_SIZE=MAX_TOTAL_SIZE).items():
+            print('Zipping file #' + zipnumber)
+            with zipfile.ZipFile(os.path.join(self.path, zipnumber+'.zip'), 'w') as myzip:
+                [myzip.write(os.path.join(self.path, file)) for file in contents]
             
