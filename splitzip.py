@@ -36,9 +36,17 @@ class Folder:
         i = 0;
         total_size = 0;
         for ind in self.contents.index:
-            total_size += self.contents.loc[ind]['size']
-            if total_size <= MAX_TOTAL_SIZE:
-                file_sets[str(i).zfill(3)].append(self.contents.loc[ind]['name'])
+            if self.contents.loc[ind]['size'] > MAX_TOTAL_SIZE:
+                continue
+            else:
+                total_size += self.contents.loc[ind]['size']
+                
+            if total_size > MAX_TOTAL_SIZE:
+                i += 1
+                file_sets[str(i).zfill(3)] = list()
+                total_size = self.contents.loc[ind]['size']
+                            
+            file_sets[str(i).zfill(3)].append(self.contents.loc[ind]['name'])
                 
         return file_sets
             
