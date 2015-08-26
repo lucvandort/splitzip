@@ -52,5 +52,5 @@ class Folder:
         for zipnumber, contents in self.split_contents(MAX_TOTAL_SIZE=MAX_TOTAL_SIZE).items():
             print('Zipping file #' + zipnumber)
             with zipfile.ZipFile(os.path.join(self.path, zipnumber+'.zip'), 'w') as myzip:
-                [myzip.write(os.path.join(self.path, file)) for file in contents]
+                [myzip.write(filename=os.path.join(self.path, file), arcname=file) for file in contents]
             
