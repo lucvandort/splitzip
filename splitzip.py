@@ -7,6 +7,7 @@ Created on Wed Aug 26 13:56:07 2015
 
 import os, stat
 import pandas as pd
+import zipfile
 
 
 class Folder:
@@ -30,4 +31,14 @@ class Folder:
 #                print('file: ' + filepath)
                 self.contents.loc[len(self.contents)] = (filename, filestat.st_size)
 
-
+    def split_contents(self, MAX_TOTAL_SIZE = 100e6):
+        file_sets = {'000': list()}
+        i = 0;
+        total_size = 0;
+        for ind in self.contents.index:
+            total_size += self.contents.loc[ind]['size']
+            if total_size <= MAX_TOTAL_SIZE:
+                file_sets[str(i).zfill(3)].append(self.contents.loc[ind]['name'])
+                
+        return file_sets
+            
